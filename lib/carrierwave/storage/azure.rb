@@ -15,9 +15,9 @@ module CarrierWave
 
       def connection
         @connection ||= begin
-          uploader.azure_credentials.map do |key, val|
-            ::Azure.config.send("#{key}=", val)
-          end unless uploader.azure_credentials.nil?
+          %i(storage_account_name storage_access_key storage_blob_host).each do |key|
+            ::Azure.config.send("#{key}=", uploader.send("azure_#{key}"))
+          end
           ::Azure::BlobService.new
         end
       end
@@ -40,8 +40,8 @@ module CarrierWave
 
         def url(options = {})
           path = ::File.join @uploader.azure_container, @path
-          if @uploader.azure_host
-            "#{@uploader.azure_host}/#{path}"
+          if @uploader.asset_host
+            "#{@uploader.asset_host}/#{path}"
           else
             @connection.generate_uri(path).to_s
           end

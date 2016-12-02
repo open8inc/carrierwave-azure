@@ -16,14 +16,15 @@ And then execute:
 
 First configure CarrierWave with your Azure storage credentials
 
+see [Azure/azure-sdk-for-ruby](https://github.com/Azure/azure-sdk-for-ruby#via-code)
+
 ```ruby
 CarrierWave.configure do |config|
-  config.azure_credentials = {
-    storage_account_name: 'YOUR STORAGE ACCOUNT NAME',
-    storage_access_key:   'YOUR STORAGE ACCESS KEY'
-  }
+  config.azure_storage_account_name = 'YOUR STORAGE ACCOUNT NAME'
+  config.azure_storage_access_key = 'YOUR STORAGE ACCESS KEY'
+  config.azure_storage_blob_host = 'YOUR STORAGE BLOB HOST' # optional
   config.azure_container = 'YOUR CONTAINER NAME'
-  config.azure_host = 'YOUR CDN HOST' # optional
+  config.asset_host = 'YOUR CDN HOST' # optional
 end
 ```
 
